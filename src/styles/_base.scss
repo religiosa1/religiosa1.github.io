@@ -1,0 +1,23 @@
+:root {
+  --clr-txt: #111;
+  --clr-link: royalblue;
+  --clr-link-hover: cornflowerblue;
+  --filter-hover: brightness(0) saturate(100%) invert(58%) sepia(78%) saturate(2592%) hue-rotate(197deg) brightness(102%) contrast(86%);
+}
+
+html, body {
+  margin: 0;
+  padding: 0 10px;
+  font-size: 16px;
+  line-height: 1.25em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: white;
+  color: var(--clr-txt);
+}
+
+a {
+  color: var(--clr-link);
+  transition: color 0.05s;
+  &:visited { color: darkslateblue; }
+  &:hover { color: var(cornflowerblue); }
+}

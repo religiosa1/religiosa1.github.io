@@ -1,0 +1,26 @@
+{% extends "_base.njk" %}
+
+{% block content %}
+<h2 class="title">
+  {{ section.title }}
+</h2>
+
+<nav class="breadcrumbs">
+  <a class="breadcrumbs__link" href="/">Главная</a>
+  <span class="breadcrumbs__link breadcrumbs__link_current">{{parent.name}}</span>
+</nav>
+
+{% if content %}
+<div class="category-desc content">
+  {{ content | safe }}
+</div>
+{% endif %}
+
+
+<nav class="section-nav">
+{% for article in collections[collection] %}
+  <a class="section-nav__link" href="{{article.url}}">{{ article.data.title }}</a>
+{% endfor %}
+</nav>
+
+{% endblock content %}

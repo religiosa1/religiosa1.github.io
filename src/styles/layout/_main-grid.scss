@@ -1,0 +1,49 @@
+.main-grid {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer"
+  ;
+  grid-template-rows: min-content auto min-content;
+  grid-template-columns: minmax(200px, 1200px);
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.main-grid__header {
+  grid-area: header;
+  align-self: start;
+}
+
+.main-grid__main {
+  grid-area: main;
+  align-self: stretch;
+}
+
+.main-grid__footer {
+  grid-area: footer;
+  align-self: end;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+a.github-link {
+  display: inline-block;
+  color: var(--clr-txt);
+  text-decoration: none;
+}
+.github-link::after {
+  content: "";
+  display: inline-block;
+  background: url("/static/github-mark.svg") no-repeat center / contain;
+  height: 1.2em;
+  width: 1.2em;
+  vertical-align: -20%;
+  transition: filter 0.05s;
+}
+.github-link:hover {
+  color: var(--clr-link-hover);
+  &::after { filter: var(--filter-hover); }
+}

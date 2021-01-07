@@ -1,0 +1,5 @@
+.breadcrumbs__link:not(.breadcrumbs__link_current)::after {
+  content: "▸";
+  display: inline-block;
+  color: var(--clr-txt, #000);
+}

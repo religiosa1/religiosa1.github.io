@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Домашняя страничка" />
+
+    <title>{{ title | default("Превозмогая трудности. Домашняя страничка.") }}</title>
+
+    <link rel="icon" href="/static/favicon.png" />
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    {% block header_includes %}{% endblock %}
+  </head>
+  <body class="{{ bodyClass | default('main-grid') }}">
+    <header class="main-grid__header">
+      <h1>Превозмогая трудности. Домашняя страничка.</h1>
+    </header>
+
+    <main class="main-grid__main">
+    {% block content %}
+    {% endblock content %}
+    </main>
+
+    <footer class="main-grid__footer">
+      <span class="copyright">
+        Использование материалов под вашу личную отственность.
+      </span>
+      <a href="https://github.com/religiosa1/religiosa.ru" class="github-link">
+        Код сайта
+      </a>
+    </footer>
+
+    {% block body_includes %}{% endblock %}
+  </body>
+</html>

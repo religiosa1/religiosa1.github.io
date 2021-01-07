@@ -1,3 +1,6 @@
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const pluginTOC = require('eleventy-plugin-toc');
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.setTemplateFormats([
     // Templates:
@@ -13,13 +16,15 @@ module.exports = function (eleventyConfig) {
     'woff',
     'woff2',
   ]);
+  eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(pluginTOC);
   eleventyConfig.addPassthroughCopy('static');
 
   return {
     dir: {
-      input: '_template',
-      includes: '../_includes',
-      output: '_output',
+      input: "content",
+      includes: "../templates",
+      output: "dist"
     },
   };
 };

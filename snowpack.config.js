@@ -1,11 +1,13 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   mount: {
-    _output: '/',
-    src: '/_dist_',
+    dist: '/',
+    "src/scripts": '/scripts',
+    "src/styles": "/styles"
   },
   plugins: [
     ['@snowpack/plugin-run-script', { cmd: 'eleventy', watch: '$1 --watch' }],
+    ['@snowpack/plugin-sass', { } ],
   ],
   install: [
     /* ... */
