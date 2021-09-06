@@ -1,6 +1,6 @@
 ---
 title: "Пакетная обработка файлов"
-layout: ./Layout.astro
+layout: $/components/ArticleLayout.astro
 ---
 
 В винде есть специальная команда для рекурсивного прохода по файлам:

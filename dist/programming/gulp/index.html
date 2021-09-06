@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Личные заметки и всякая всячина - gulp</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="stylesheet" href="/style/global.css"><link rel="stylesheet" href="/style/prism-vsc-dark-plus.css"><link rel="stylesheet" href="/_astro/common-bMouB.css" type="text/css"></head><body class="main-grid"><header class="main-grid__header astro-HaDR30LO"><a href="/" class="moto-link astro-HaDR30LO"><h1 class="moto astro-HaDR30LO">Личные заметки и всякая всячина.</h1></a></header><main class="main-grid__main astro-HaDR30LO"><h2 class="astro-T9ouf1IY">gulp</h2><nav class="breadcrumbs astro-Iv2DiwOJ"><a href="/" class="breadcrubmbs-link astro-N3k3AXB7">Главная страница</a><a href="/programming/" class="breadcrubmbs-link astro-N3k3AXB7">Программирование</a><span class="breadcrumbs__current astro-Iv2DiwOJ">gulp</span></nav><article class="md-content astro-T9ouf1IY"><div class="alert-box astro-T9ouf1IY">
+        Содержание этой статьи крайне устарело!
+        Она здесь исключительно для исторического очерка, руководствование ей напрямую скорее принесёт больше вреда
+        чем пользы.
+      </div><h1 id="это-доисторическая-статья-про-сборку-фронта-гульпом">Это доисторическая статья про сборку фронта гульпом</h1><p>Я не знаю, кому в наше время ещё нежен гульп в таком виде в наше время, но пусть останется в летописи.</p><p>Данный вариант использует для сборки js пллагин gulp-better-rollup. Таким образом сюда можно при желании
+запихнуть какие-то штуки вроде gulp-convert-encoding или какие-то другие части пайпа.
+В официальной документации rollup приведён пример внедрения без использования плагина,
+можно при желании взять оттуда.</p><pre class=" language-javascript"><code class="language-javascript"><span class="token comment">/* eslint-env node */</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span>src<span class="token punctuation">,</span> dest<span class="token punctuation">,</span> watch<span class="token punctuation">,</span> parallel<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> log <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fancy-log"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> sass <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp-sass"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> tildeImporter <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"node-sass-tilde-importer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> del <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"del"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> sourcemaps <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp-sourcemaps"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> postcss <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp-postcss"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> autoprefixer <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"autoprefixer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> notifier <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"node-notifier"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> flexibility <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'postcss-flexibility'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> plumber <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp-plumber"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> nunjucks <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-nunjucks-render'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'gulp-data'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> rollup <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'rollup'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> nodeResolve <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@rollup/plugin-node-resolve'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> terser <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'rollup-plugin-terser'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>terser<span class="token punctuation">;</span>
+<span class="token keyword">const</span> commonJs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@rollup/plugin-commonjs'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// npm install --save-dev @babel/core @babel/preset-env</span>
+<span class="token comment">// npm install --save core-js regenerator-runtime</span>
+<span class="token keyword">const</span> babel <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'rollup-plugin-babel'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Компиляция sass</span>
+<span class="token keyword">function</span> <span class="token function">css</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> plugins <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token function">autoprefixer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// управляем поддерживаемыми браузерами через .browserlistrc</span>
+    flexibility<span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token function">del</span><span class="token punctuation">(</span><span class="token string">"./css/*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Мы удаляем сначала все css, таким образом если компиляция sass сорвалось, то это будет заметно</span>
+
+  <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">"./scss/**/*.scss"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>sourcemaps<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">sass</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      importer<span class="token operator">:</span> tildeImporter<span class="token punctuation">,</span> <span class="token comment">// для импорта из node_modules через ~, например '~bootstrap/scss/bootstrap'</span>
+      outputStyle<span class="token operator">:</span><span class="token string">"compressed"</span><span class="token punctuation">,</span> <span class="token comment">// минимизированный вывод</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      notifier<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"SASS error"</span><span class="token punctuation">,</span><span class="token string">"message"</span><span class="token operator">:</span> err<span class="token punctuation">.</span>message<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">"end"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">postcss</span><span class="token punctuation">(</span>plugins<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>sourcemaps<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"./"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// sourcemap'ы, для более веселого дебага</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">"./css"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// сборка шаблонов nunjucks</span>
+<span class="token keyword">function</span> <span class="token function">html</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'./*.njk'</span><span class="token punctuation">,</span> <span class="token string">'!./_*.njk'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">plumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// Чтобы не вываливался watch, хотя заметно это НЕ будет</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+      <span class="token keyword">const</span> btgt <span class="token operator">=</span> <span class="token string">"./data/banners.js"</span><span class="token punctuation">;</span>
+      <span class="token keyword">delete</span> require<span class="token punctuation">.</span>cache<span class="token punctuation">[</span>require<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>btgt<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token keyword">let</span> d <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token operator">...</span><span class="token function">require</span><span class="token punctuation">(</span>btgt<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> d<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">nunjucks</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      ext<span class="token operator">:</span><span class="token string">""</span><span class="token punctuation">,</span>
+      path<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'src/'</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">'./'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">js</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> rollup<span class="token punctuation">.</span><span class="token function">rollup</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    input<span class="token operator">:</span> <span class="token string">'./src/app.js'</span><span class="token punctuation">,</span>
+    plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token function">commonJs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function">nodeResolve</span><span class="token punctuation">(</span><span class="token punctuation">{</span> browser<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function">babel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        exclude<span class="token operator">:</span> <span class="token string">'node_modules/**'</span><span class="token punctuation">,</span>
+        runtimeHelpers<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        extensions<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">".js"</span><span class="token punctuation">,</span> <span class="token string">".mjs"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        presets<span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">[</span><span class="token string">"@babel/env"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+            modules<span class="token operator">:</span> <span class="token string">'false'</span><span class="token punctuation">,</span>
+            useBuiltIns<span class="token operator">:</span> <span class="token string">"usage"</span><span class="token punctuation">,</span>
+            corejs<span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function">terser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">bundle</span> <span class="token operator">=&gt;</span> bundle<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    file<span class="token operator">:</span> <span class="token string">'./js/app.min.js'</span><span class="token punctuation">,</span>
+    format<span class="token operator">:</span> <span class="token string">'iife'</span><span class="token punctuation">,</span>
+    sourcemap<span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    notifier<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"Rollup error"</span><span class="token punctuation">,</span><span class="token string">"message"</span><span class="token operator">:</span> err<span class="token punctuation">.</span>message<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>message<span class="token punctuation">,</span> err<span class="token punctuation">.</span>file<span class="token punctuation">,</span> err<span class="token punctuation">.</span>frame<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+exports<span class="token punctuation">.</span>css <span class="token operator">=</span> css<span class="token punctuation">;</span>
+exports<span class="token punctuation">.</span>html <span class="token operator">=</span> html<span class="token punctuation">;</span>
+exports<span class="token punctuation">.</span>js <span class="token operator">=</span> js<span class="token punctuation">;</span>
+exports<span class="token punctuation">.</span>default <span class="token operator">=</span> <span class="token function">parallel</span><span class="token punctuation">(</span>html<span class="token punctuation">,</span> js<span class="token punctuation">,</span> css<span class="token punctuation">)</span><span class="token punctuation">;</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">watch</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">watch</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"scss/*.scss"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> css<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">watch</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"src/**/*.js"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> js<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">watch</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'./**/*.njk'</span><span class="token punctuation">,</span> <span class="token string">'data/*.js'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> html<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre><p>В package.json (или в .browserlistrc) надо создать конфиг для babel и autoprefixer'а</p><pre class=" language-javascript"><code class="language-javascript">  <span class="token comment">// всякое старьё для bootstrap'а 3</span>
+  <span class="token string">"browserslist"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"Android 2.3"</span><span class="token punctuation">,</span>
+    <span class="token string">"Android &gt;= 4"</span><span class="token punctuation">,</span>
+    <span class="token string">"Chrome &gt;= 20"</span><span class="token punctuation">,</span>
+    <span class="token string">"Firefox &gt;= 24"</span><span class="token punctuation">,</span>
+    <span class="token string">"Explorer &gt;= 8"</span><span class="token punctuation">,</span>
+    <span class="token string">"iOS &gt;= 6"</span><span class="token punctuation">,</span>
+    <span class="token string">"Opera &gt;= 12"</span><span class="token punctuation">,</span>
+    <span class="token string">"Safari &gt;= 6"</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// более осмысленный вариант</span>
+  <span class="token string">"browserslist"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"Android &gt;= 49"</span><span class="token punctuation">,</span>
+    <span class="token string">"Chrome &gt;= 49"</span><span class="token punctuation">,</span>
+    <span class="token string">"Firefox &gt;= 51"</span><span class="token punctuation">,</span>
+    <span class="token string">"Edge &gt;= 15"</span><span class="token punctuation">,</span>
+    <span class="token string">"iOS &gt;= 10"</span><span class="token punctuation">,</span>
+    <span class="token string">"Opera &gt;= 36"</span><span class="token punctuation">,</span>
+    <span class="token string">"Safari &gt;= 10"</span><span class="token punctuation">,</span>
+    <span class="token string">"last 2 versions"</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+</code></pre><pre class=" language-shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> --save-dev gulp fancy-log gulp-sass node-sass-tilde-importer del gulp-sourcemaps gulp-postcss autoprefixer node-notifier postcss-flexibility gulp-plumber gulp-twig gulp-data rollup gulp-better-rollup gulp-rename rollup-plugin-node-resolve rollup-plugin-terser rollup-plugin-commonjs @babel/core @babel/preset-env rollup-plugin-babel
+<span class="token function">npm</span> <span class="token function">install</span> --save core-js regenerator-runtime
+</code></pre><p>Вариант с browserify</p><p>Его стоит рассматривать как устаревший. NB как и всю эту сраную писанину</p><pre class=" language-javascript"><code class="language-javascript"><span class="token comment">// npm install --save-dev @babel/core @babel/preset-env @babel/plugin-transform-runtime</span>
+<span class="token comment">// npm install --save @babel/polyfill @babel/runtime</span>
+<span class="token keyword">const</span> browserify <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"browserify"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> babelify <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"babelify"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> tap <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp-tap"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> buffer <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"vinyl-buffer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> uglify <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp-uglify"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> rename <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"gulp-rename"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">js</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">"src/app.js"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>read<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// не читаем -- читает browserify</span>
+    <span class="token comment">// преобразуем файлы используя gulp-tap</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">tap</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token parameter">file</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"bundling "</span> <span class="token operator">+</span> file<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment">// кормим browserify</span>
+      file<span class="token punctuation">.</span>contents <span class="token operator">=</span> <span class="token function">browserify</span><span class="token punctuation">(</span>file<span class="token punctuation">.</span>path<span class="token punctuation">,</span> <span class="token punctuation">{</span>debug<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span> babelify<span class="token punctuation">.</span><span class="token function">configure</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+          presets<span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">[</span><span class="token string">"@babel/preset-env"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+              useBuiltIns<span class="token operator">:</span> <span class="token string">"usage"</span><span class="token punctuation">,</span>
+              modules<span class="token operator">:</span> <span class="token string">"commonjs"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">]</span>
+          <span class="token punctuation">]</span><span class="token punctuation">,</span>
+          plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token string">"@babel/plugin-transform-runtime"</span><span class="token punctuation">,</span>
+            <span class="token comment">// "loop-optimizer", // forEach для IE babel-plugin-loop-optimizer</span>
+            <span class="token comment">// "transform-decorators-legacy", // декораторы</span>
+            <span class="token comment">// "@babel/plugin-proposal-optional-chaining" // null propagation operator</span>
+            <span class="token comment">// "@babel/plugin-proposal-do-expressions"</span>
+            <span class="token comment">// ["transform-class-properties", { "spec": false }] // свойства класса для vue</span>
+          <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token comment">// END transform(babelify)</span>
+        <span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span>vueify<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span><span class="token punctuation">{</span> global<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token function">envify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token constant">NODE_ENV</span><span class="token operator">:</span> <span class="token string">'production'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">bundle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// END gulp-tap</span>
+    <span class="token comment">// Затыкаем рот попытке потока навернуться</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">plumber</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token function-variable function">errorHandler</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      notifier<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"title"</span><span class="token operator">:</span> <span class="token string">"JS-Compile Error"</span><span class="token punctuation">,</span><span class="token string">"message"</span><span class="token operator">:</span> err<span class="token punctuation">.</span>message<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"JS-Compile Error: "</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">"end"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment">// преобразуем в буффер, чтобы gulp-sourcemaps был счастлив</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>sourcemaps<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">{</span>loadMaps<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment">//.pipe(ngAnnotate()) // Делаем ангулярку счастливой</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">uglify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">rename</span><span class="token punctuation">(</span><span class="token punctuation">{</span> suffix<span class="token operator">:</span> <span class="token string">".min"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// Переименовываем, дописывая суффикс .min</span>
+    <span class="token comment">//.pipe(convertEncoding({to: 'cp1251'}))</span>
+    <span class="token comment">// пишем sourcemap'ы</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>sourcemaps<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"./"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">"js"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Пишем результата в папку js</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Голый rollup</p><p>Если не нужно собирать css/шаблоны то есть смысл пользоваться только rollup'ом.</p><p>Ниже вариант с бабелем, минимизацией и sourcemap'ами.</p><pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">import</span> nodeResolve <span class="token keyword">from</span> <span class="token string">'rollup-plugin-node-resolve'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>terser<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'rollup-plugin-terser'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> commonJs <span class="token keyword">from</span> <span class="token string">'rollup-plugin-commonjs'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> babel <span class="token keyword">from</span> <span class="token string">'rollup-plugin-babel'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> sourcemaps <span class="token keyword">from</span> <span class="token string">'rollup-plugin-sourcemaps'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+  input<span class="token operator">:</span> <span class="token string">'src/app.js'</span><span class="token punctuation">,</span>
+  output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    file<span class="token operator">:</span> <span class="token string">'app/app.min.js'</span><span class="token punctuation">,</span>
+    sourcemap<span class="token operator">:</span> <span class="token string">'app/app.min.js.map'</span><span class="token punctuation">,</span>
+    format<span class="token operator">:</span> <span class="token string">'iife'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token function">nodeResolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">commonJs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">sourcemaps</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">babel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      exclude<span class="token operator">:</span> <span class="token string">'node_modules/**'</span><span class="token punctuation">,</span>
+      presets<span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">[</span><span class="token string">"@babel/env"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+          modules<span class="token operator">:</span> <span class="token string">'false'</span><span class="token punctuation">,</span>
+          useBuiltIns<span class="token operator">:</span> <span class="token string">"usage"</span><span class="token punctuation">,</span>
+          corejs<span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">]</span>
+      <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">terser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre></article></main><footer class="main-grid__footer astro-HaDR30LO"><a href="https://github.com/religiosa1/religiosa1.github.io" class="github-link astro-HaDR30LO">
+      Исходный код
+    </a></footer></body></html>

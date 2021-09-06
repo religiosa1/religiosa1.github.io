@@ -1,6 +1,6 @@
 ---
 title: "Тестовый сервер express"
-layout: ./Layout.astro
+layout: $/components/ArticleLayout.astro
 ---
 
 

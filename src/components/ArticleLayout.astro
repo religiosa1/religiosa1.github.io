@@ -3,6 +3,21 @@ import BaseLayout from "$/components/BaseLayout.astro";
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 
 const { content } = Astro.props;
+
+const [_, path] = Astro.request.url.pathname.split("/");
+let pathname;
+switch (path) {
+  case "electronics":
+    pathname = "Электроника"
+  break;
+  case "programming":
+    pathname = "Программирование"
+  break;
+  case "woodworking":
+    pathname = "Столярка"
+  break;
+}
+
 ---
 
 <BaseLayout title={content.title}>
@@ -10,7 +25,9 @@ const { content } = Astro.props;
 
   <Breadcrumbs current={content.title}>
     <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
-    <BreadcrumbsLink to="/programming/">Программирование</BreadcrumbsLink>
+    { pathname && (
+      <BreadcrumbsLink to={`/${path}/`}>{pathname}</BreadcrumbsLink>
+    )}
   </Breadcrumbs>
 
   <article class="md-content">

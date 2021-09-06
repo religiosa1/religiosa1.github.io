@@ -1,6 +1,6 @@
 ---
 title: Специализированные исторические и самодельные клеи
-layout: ./Layout.astro
+layout: $/components/ArticleLayout.astro
 ---
 
 Купить различные животные клеи можно [тут](http://woodperfect.ru/im/folder/kostnii_mezdrovii_ribii_klei).

@@ -1,6 +1,6 @@
 ---
 title: "Расчёт конденсатора для линейного БП"
-layout: ./Layout.astro
+layout: $/components/ArticleLayout.astro
 ---
 
 ```

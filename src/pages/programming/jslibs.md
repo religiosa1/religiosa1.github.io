@@ -1,7 +1,6 @@
 ---
 title: Подборка js-плагинов
-layout: ./Layout.astro
-depreceated: true
+layout: $/components/ArticleLayout.astro
 ---
 
 Здесь приведены некоторые js-plugin's для типовых задач, которые мне понравились.

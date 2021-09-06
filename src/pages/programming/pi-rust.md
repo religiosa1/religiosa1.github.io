@@ -1,6 +1,6 @@
 ---
 title: "Кросс-компиляция Rust для raspberry pi"
-layout: ./Layout.astro
+layout: $/components/ArticleLayout.astro
 ---
 
 В этой статье описан процесс кросскомпиляции из под Windows на raspberry pi/raspbian как он был на 2-17 год.

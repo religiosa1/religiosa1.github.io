@@ -1,6 +1,6 @@
 ---
 title: Финишные покрытия
-layout: ./Layout.astro
+layout: $/components/ArticleLayout.astro
 ---
 
 ## Содержание

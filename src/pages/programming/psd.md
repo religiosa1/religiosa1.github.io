@@ -1,6 +1,6 @@
 ---
 title: "Требования к PSD-макетам"
-layout: ./Layout.astro
+layout: $/components/ArticleLayout.astro
 ---
 
 1. Соблюдение сетки в макете
