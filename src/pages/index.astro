@@ -17,6 +17,7 @@ import BaseLayout from '$/components/BaseLayout.astro';
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
 }
 
@@ -39,6 +40,7 @@ import BaseLayout from '$/components/BaseLayout.astro';
 @media (min-width: 1000px) {
   .main-nav__link {
     flex-basis: calc(50% - 1rem);
+    max-width: 250px;
   }
 }
 </style>
