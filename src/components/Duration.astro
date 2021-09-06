@@ -1,0 +1,23 @@
+---
+const { value } = Astro.props;
+
+const [ from, to ] = (value || "").split("..", 2);
+---
+
+<span class="duration">
+  <span class="duration__title">
+    <slot />:
+  </span>
+  { to && "от " }
+  <span class="duration__time duration__time_from">
+    {from}
+  </span>
+  { to && (
+    <Fragment>
+      до
+      <span class="duration__time duration__time_to">
+        {to}
+      </span>
+    </Fragment>
+  )}
+</span>

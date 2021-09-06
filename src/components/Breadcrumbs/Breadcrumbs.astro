@@ -1,0 +1,18 @@
+---
+const { current } = Astro.props;
+---
+
+<nav class="breadcrumbs">
+  <slot />
+  { current && (
+    <span class="breadcrumbs__current">{ current }</span>
+  )}
+</nav>
+
+<style>
+  .breadcrumbs {
+    display: block;
+    margin: 1rem 0;
+    font-size: smaller;
+  }
+</style>

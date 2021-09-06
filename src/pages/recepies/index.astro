@@ -1,0 +1,20 @@
+---
+import BaseLayout from '$/components/BaseLayout.astro';
+
+import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+
+import ArticleList from "$/components/ArticleList.astro";
+
+const articles = Astro.fetchContent('$/content/recepies/*.md');
+---
+<BaseLayout title="Кулинарные рецепты">
+  <h2>Кулинарные рецепты</h2>
+
+  <Breadcrumbs current="Кулинарные рецепты">
+    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+  </Breadcrumbs>
+
+  <p>Здесь собраны всякие разные кулинарные рецепты, которые мне понравились и которые я потом готовил.</p>
+
+  <ArticleList slug articles={articles} />
+</BaseLayout>

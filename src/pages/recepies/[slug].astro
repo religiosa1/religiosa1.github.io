@@ -1,0 +1,97 @@
+---
+import BaseLayout from '$/components/BaseLayout.astro';
+import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+import Duration from "$/components/Duration.astro";
+import { Markdown } from 'astro/components';
+
+export async function getStaticPaths() {
+  const articles = Astro.fetchContent('$/content/recepies/*.md');
+  return articles.map((article) => ({
+    params: { slug: article.slug, },
+    props: { article: {
+      ...article,
+      recommended: article.recommended?.length ?
+        article.recommended.map( i => articles.find(j => j.slug === i))
+        : [],
+    } },
+  }) );
+}
+
+const { article } = Astro.props;
+---
+
+<BaseLayout title={article.title}>
+  <h2>{article.title}</h2>
+  { article.originalTitle && (
+    <i class="original-title">{article.originalTitle}</i>
+  )}
+
+  <Breadcrumbs current={article.title}>
+    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+    <BreadcrumbsLink to="/recepies/">Кулинарные рецепты</BreadcrumbsLink>
+  </Breadcrumbs>
+
+  <article>
+
+    { article.time && <Duration value={article.time}>Время приготовления</Duration> }
+    { article.waiting && <Duration value={article.waiting}>Время ожидания</Duration> }
+
+    { article.ingredients?.length > 0 && (<>
+      <h3>Ингредиенты</h3>
+      <ul class="ingredients">
+        { article.ingredients.map((ingredient, idx) => (
+          <li class="ingredients__item">
+            <h5 class="ingredient__name">{ingredient.name}</h5>
+            <span class="ingredient__quant">{ingredient.quant}</span>
+            <i class="ingredient__alt">{ingredient.alt}</i>
+            <i class="ingredient__desc">{ingredient.desc}</i>
+          </li>
+        )) }
+      </ul>
+    </>)}
+
+    <h3>Инструкции</h3>
+    { article.astro.html }
+
+    { article.sources?.length > 0 && (<>
+      <h3>Источники</h3>
+      { article.sources.map(source => (
+        <a href={source} class="b-link">{source}</a>
+      ))}
+    </>)}
+
+    { article.recommended?.length > 0 && (<>
+      <h3>Рекомендации</h3>
+      { article.recommended.filter(r => r).map(r => (
+        <a href={"/recepies/" + r.slug} class="b-link">{r.title}</a>
+      ))}
+    </>)}
+  </article>
+</BaseLayout>
+
+<style>
+  .ingredients {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0;
+  }
+  .ingredients__item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin: 0.3rem 0;
+    padding: 0;
+  }
+  .ingredient__name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: italic;
+  }
+  .b-link {
+    display: block;
+    margin: 0 0 0.5rem;
+  }
+</style>

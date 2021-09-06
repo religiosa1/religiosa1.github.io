@@ -1,0 +1,19 @@
+---
+import BaseLayout from "$/components/BaseLayout.astro";
+import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+
+const { content } = Astro.props;
+---
+
+<BaseLayout title={content.title}>
+  <h2>{content.title}</h2>
+
+  <Breadcrumbs current={content.title}>
+    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+    <BreadcrumbsLink to="/electronics/">Электроника</BreadcrumbsLink>
+  </Breadcrumbs>
+
+  <article class="md-content">
+    <slot />
+  </article>
+</BaseLayout>

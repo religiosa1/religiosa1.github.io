@@ -1,0 +1,35 @@
+---
+  export interface Props {
+    articles: Array<{ slug: string, title: string }>;
+    basepath?: string;
+    slug?: boolean;
+  }
+
+  const {
+    articles,
+    basepath="./",
+    slug,
+  }: Props = Astro.props;
+---
+<nav class="articles-list">
+  {articles.map((article) => {
+    const url = slug ? basepath + article.slug : article.url;
+    return (
+      <a href={url} class="articles-list__link">
+        {article.title}
+      </a>
+    )
+  })}
+</nav>
+
+<style>
+  .articles-list {
+    display: block;
+    margin: 1rem 0;
+  }
+
+  .articles-list__link {
+    display: block;
+    margin: 0.5rem 0;
+  }
+</style>

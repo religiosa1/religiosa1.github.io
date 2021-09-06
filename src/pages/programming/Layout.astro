@@ -1,0 +1,35 @@
+---
+import BaseLayout from "$/components/BaseLayout.astro";
+import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+
+const { content } = Astro.props;
+---
+
+<BaseLayout title={content.title}>
+  <h2>{content.title}</h2>
+
+  <Breadcrumbs current={content.title}>
+    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+    <BreadcrumbsLink to="/programming/">Программирование</BreadcrumbsLink>
+  </Breadcrumbs>
+
+  <article class="md-content">
+    {content.depreceated && (
+      <div class="alert-box">
+        Содержание этой статьи крайне устарело!
+        Она здесь исключительно для исторического очерка, руководствование ей напрямую скорее принесёт больше вреда
+        чем пользы.
+      </div>
+    )}
+    <slot />
+  </article>
+</BaseLayout>
+
+<style>
+  .alert-box {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px dashed var(--clr-danger, red);
+    border-radius: 5px;
+  }
+</style>

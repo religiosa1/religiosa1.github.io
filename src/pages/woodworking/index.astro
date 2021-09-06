@@ -1,0 +1,20 @@
+---
+import BaseLayout from '$/components/BaseLayout.astro';
+
+import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+
+import ArticleList from "$/components/ArticleList.astro";
+
+const articles = Astro.fetchContent('$/pages/woodworking/*.md');
+---
+<BaseLayout title="Столярка">
+  <h2>Столярка</h2>
+
+  <Breadcrumbs current="Столярка">
+    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+  </Breadcrumbs>
+
+  <p>Различные заметки по столярке</p>
+
+  <ArticleList articles={articles} />
+</BaseLayout>

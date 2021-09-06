@@ -1,0 +1,23 @@
+---
+import BaseLayout from '$/components/BaseLayout.astro';
+
+import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+
+import ArticleList from "$/components/ArticleList.astro";
+
+const articles = Astro.fetchContent('$/pages/programming/*.md');
+---
+<BaseLayout title="Программирование">
+  <h2>Программирование</h2>
+
+  <Breadcrumbs current="Программирование">
+    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+  </Breadcrumbs>
+
+  <p>
+    Это в основном дико устаревшие заметки про программированию, которые я оставил для истории ну
+    или для редких случаев, когда приходится заниматься палеонтологией.
+  </p>
+
+  <ArticleList articles={articles} />
+</BaseLayout>
