@@ -1,14 +1,13 @@
 ---
-title: Варёный рис по японски.
+title: Варёный рис по японски
 slug: japanese-rice
-originalTitle:
 time: 0.5h
 waiting: 0.5h
 ingredients:
   - { name: среднезерновой рис (кулон), quant: 1 стакан }
   - { name: вода, quant: "1.1 .. 1.2 стакана" }
 sources:
-  - https://www.justonecookbook.com/catfish-kabayaki/
+  - https://www.justonecookbook.com/how-to-cook-rice/
 ---
 
 Простейший рецепт риса -- рис варёный по японски. Варится без соли или каких-тьо дополнительных ингредиентов,

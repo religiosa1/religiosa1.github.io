@@ -1,6 +1,6 @@
 ---
 title: Кабаяки
-slug: Кабаяки
+slug: kabayaki
 originalTitle: 蒲焼き
 time: 0.5h
 ingredients:
