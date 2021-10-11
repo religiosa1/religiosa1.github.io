@@ -9,8 +9,8 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "@astrojs/renderer-svelte": "^0.1.1",
-    "astro": "^0.20.4",
+    "@astrojs/renderer-svelte": "^0.1.2",
+    "astro": "^0.20.10",
     "remark-toc": "^8.0.0"
   }
 }
