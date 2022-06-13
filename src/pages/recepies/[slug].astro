@@ -1,45 +1,51 @@
 ---
+import type { MarkdownInstance } from "astro";
+import type { MarkdownRecipeMatter } from '$/models/MarkdownRecipeMatter';
 import BaseLayout from '$/components/BaseLayout.astro';
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 import Duration from "$/components/Duration.astro";
-import { Markdown } from 'astro/components';
+
+interface Props {
+  article: MarkdownInstance<MarkdownRecipeMatter>;
+  recommended: MarkdownInstance<MarkdownRecipeMatter>[];
+}
 
 export async function getStaticPaths() {
-  const articles = Astro.fetchContent('$/content/recepies/*.md');
+  const articles = await Astro.glob<MarkdownRecipeMatter>('../../content/recepies/*.md');
   return articles.map((article) => ({
-    params: { slug: article.slug, },
-    props: { article: {
-      ...article,
-      recommended: article.recommended?.length ?
-        article.recommended.map( i => articles.find(j => j.slug === i))
+    params: { slug: article.frontmatter.slug, },
+    props: {
+      article,
+      recommended: article.frontmatter.recommended?.length ?
+        article.frontmatter.recommended.map( i => articles.find(j => j.frontmatter.slug === i))
         : [],
-    } },
+    },
   }) );
 }
 
-const { article } = Astro.props;
+const { article, recommended } = Astro.props as Props;
 ---
 
-<BaseLayout title={article.title}>
-  <h2>{article.title}</h2>
-  { article.originalTitle && (
-    <i class="original-title">{article.originalTitle}</i>
+<BaseLayout title={article.frontmatter.title}>
+  <h2>{article.frontmatter.title}</h2>
+  { article.frontmatter.originalTitle && (
+    <i class="original-title">{article.frontmatter.originalTitle}</i>
   )}
 
-  <Breadcrumbs current={article.title}>
+  <Breadcrumbs current={article.frontmatter.title}>
     <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
     <BreadcrumbsLink to="/recepies/">Кулинарные рецепты</BreadcrumbsLink>
   </Breadcrumbs>
 
   <article>
 
-    { article.time && <Duration value={article.time}>Время приготовления</Duration> }
-    { article.waiting && <Duration value={article.waiting}>Время ожидания</Duration> }
+    { article.frontmatter.time && <Duration value={article.frontmatter.time}>Время приготовления</Duration> }
+    { article.frontmatter.waiting && <Duration value={article.frontmatter.waiting}>Время ожидания</Duration> }
 
-    { article.ingredients?.length > 0 && (<>
+    { article.frontmatter.ingredients?.length > 0 && (<>
       <h3>Ингредиенты</h3>
       <ul class="ingredients">
-        { article.ingredients.map((ingredient, idx) => (
+        { article.frontmatter.ingredients.map((ingredient) => (
           <li class="ingredients__item">
             <h5 class="ingredient__name">{ingredient.name}</h5>
             <span class="ingredient__quant">{ingredient.quant}</span>
@@ -51,19 +57,19 @@ const { article } = Astro.props;
     </>)}
 
     <h3>Инструкции</h3>
-    { article.astro.html }
+    <article.Content />
 
-    { article.sources?.length > 0 && (<>
+    { article.frontmatter.sources?.length > 0 && (<>
       <h3>Источники</h3>
-      { article.sources.map(source => (
+      { article.frontmatter.sources.map(source => (
         <a href={source} class="b-link">{source}</a>
       ))}
     </>)}
 
-    { article.recommended?.length > 0 && (<>
+    { recommended?.length > 0 && (<>
       <h3>Рекомендации</h3>
-      { article.recommended.filter(r => r).map(r => (
-        <a href={"/recepies/" + r.slug} class="b-link">{r.title}</a>
+      { recommended.filter(r => r).map(r => (
+        <a href={"/recepies/" + r.frontmatter.slug} class="b-link">{r.frontmatter.title}</a>
       ))}
     </>)}
   </article>

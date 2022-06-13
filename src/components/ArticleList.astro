@@ -1,6 +1,9 @@
 ---
+  import type { MarkdownInstance } from "astro";
+  import type { MarkdownArticleMatter } from "$/models/MarkdownArticleMatter";
+
   export interface Props {
-    articles: Array<{ slug: string, title: string }>;
+    articles: MarkdownInstance<MarkdownArticleMatter>[];
     basepath?: string;
     slug?: boolean;
   }
@@ -9,14 +12,16 @@
     articles,
     basepath="./",
     slug,
-  }: Props = Astro.props;
+  } = Astro.props as Props;
 ---
 <nav class="articles-list">
-  {articles.map((article) => {
-    const url = slug ? basepath + article.slug : article.url;
+  {articles.map(async (article) => {
+    const url = slug && article.frontmatter.slug ?
+      basepath + article.frontmatter.slug :
+      article.url;
     return (
       <a href={url} class="articles-list__link">
-        {article.title}
+        {article.frontmatter.title}
       </a>
     )
   })}

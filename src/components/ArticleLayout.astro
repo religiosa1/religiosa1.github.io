@@ -4,7 +4,7 @@ import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 
 const { content } = Astro.props;
 
-const [_, path] = Astro.request.url.pathname.split("/");
+const [_, path] = new URL(Astro.request.url).pathname.split("/");
 let pathname;
 switch (path) {
   case "electronics":

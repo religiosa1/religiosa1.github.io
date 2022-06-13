@@ -1,11 +1,12 @@
 ---
+import type { MarkdownArticleMatter } from "$/models/MarkdownArticleMatter";
 import BaseLayout from '$/components/BaseLayout.astro';
 
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 
 import ArticleList from "$/components/ArticleList.astro";
 
-const articles = Astro.fetchContent('$/pages/programming/*.md');
+const articles = await Astro.glob<MarkdownArticleMatter>('./*.md');
 ---
 <BaseLayout title="Программирование">
   <h2>Программирование</h2>

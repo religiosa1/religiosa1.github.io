@@ -1,11 +1,12 @@
 ---
+import type { MarkdownRecipeMatter } from '$/models/MarkdownRecipeMatter';
 import BaseLayout from '$/components/BaseLayout.astro';
 
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 
 import ArticleList from "$/components/ArticleList.astro";
 
-const articles = Astro.fetchContent('$/content/recepies/*.md');
+const articles = await Astro.glob<MarkdownRecipeMatter>('../../content/recepies/*.md');
 ---
 <BaseLayout title="Кулинарные рецепты">
   <h2>Кулинарные рецепты</h2>
