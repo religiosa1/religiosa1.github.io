@@ -1,0 +1,21 @@
+---
+import type { MarkdownArticleMatter } from "$/models/MarkdownArticleMatter";
+import BaseLayout from '$/components/BaseLayout.astro';
+
+import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+
+import ArticleList from "$/components/ArticleList.astro";
+
+const articles = await Astro.glob<MarkdownArticleMatter>('./*.md');
+---
+<BaseLayout title="Польский язык">
+  <h2>Польский язык</h2>
+
+  <Breadcrumbs current="Польский язык">
+    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+  </Breadcrumbs>
+
+  <p>Различные заметки по польскому языку</p>
+
+  <ArticleList articles={articles} />
+</BaseLayout>

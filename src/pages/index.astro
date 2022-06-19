@@ -9,6 +9,7 @@ import BaseLayout from '$/components/BaseLayout.astro';
     <a class="main-nav__link" href="recepies/">Рецепты</a>
     <a class="main-nav__link" href="programming/">Программирование</a>
     <a class="main-nav__link" href="electronics/">Электроника</a>
+    <a class="main-nav__link" href="polski/">Польский язык</a>
   </nav>
 </BaseLayout>
 
@@ -30,6 +31,7 @@ import BaseLayout from '$/components/BaseLayout.astro';
   text-decoration: none;
   transition: background-color 0.3s ease-in-out;
   flex-basis: 100%;
+  text-align: center;
 }
 .main-nav__link:hover {
   background-color: var(--clr-highlight-lighter);
@@ -40,7 +42,7 @@ import BaseLayout from '$/components/BaseLayout.astro';
 @media (min-width: 1000px) {
   .main-nav__link {
     flex-basis: calc(50% - 1rem);
-    max-width: 250px;
+    max-width: 240px;
   }
 }
 </style>
