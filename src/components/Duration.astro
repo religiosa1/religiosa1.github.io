@@ -1,5 +1,9 @@
 ---
-const { value } = Astro.props;
+export interface Props {
+  value: string;
+}
+
+const { value } = Astro.props as Props;
 
 const [ from, to ] = (value || "").split("..", 2);
 ---

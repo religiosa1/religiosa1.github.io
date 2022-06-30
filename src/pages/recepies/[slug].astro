@@ -4,6 +4,7 @@ import type { MarkdownRecipeMatter } from '$/models/MarkdownRecipeMatter';
 import BaseLayout from '$/components/BaseLayout.astro';
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 import Duration from "$/components/Duration.astro";
+import Ingredients from "$/components/Ingredients.astro";
 
 interface Props {
   article: MarkdownInstance<MarkdownRecipeMatter>;
@@ -42,18 +43,18 @@ const { article, recommended } = Astro.props as Props;
     { article.frontmatter.time && <Duration value={article.frontmatter.time}>Время приготовления</Duration> }
     { article.frontmatter.waiting && <Duration value={article.frontmatter.waiting}>Время ожидания</Duration> }
 
-    { article.frontmatter.ingredients?.length > 0 && (<>
+    { article.frontmatter.ingredients && (<>
       <h3>Ингредиенты</h3>
-      <ul class="ingredients">
-        { article.frontmatter.ingredients.map((ingredient) => (
-          <li class="ingredients__item">
-            <h5 class="ingredient__name">{ingredient.name}</h5>
-            <span class="ingredient__quant">{ingredient.quant}</span>
-            <i class="ingredient__alt">{ingredient.alt}</i>
-            <i class="ingredient__desc">{ingredient.desc}</i>
-          </li>
-        )) }
-      </ul>
+      { Array.isArray(article.frontmatter.ingredients) ? (
+        <Ingredients ingredients={article.frontmatter.ingredients} />
+      ) : typeof article.frontmatter.ingredients === "object" ? (
+        Object.entries(article.frontmatter.ingredients).map(([ name, ingredients]) => (
+          <>
+            <h4>{name}</h4>
+            <Ingredients ingredients={ingredients} />
+          </>
+        ))
+      ) : null }
     </>)}
 
     <h3>Инструкции</h3>
@@ -76,26 +77,6 @@ const { article, recommended } = Astro.props as Props;
 </BaseLayout>
 
 <style>
-  .ingredients {
-    list-style: none;
-    margin: 1rem 0;
-    padding: 0;
-  }
-  .ingredients__item {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 1rem;
-    margin: 0.3rem 0;
-    padding: 0;
-  }
-  .ingredient__name {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
-    font-style: italic;
-  }
   .b-link {
     display: block;
     margin: 0 0 0.5rem;
