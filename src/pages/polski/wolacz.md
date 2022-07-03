@@ -23,7 +23,9 @@ Proszę pana/pani/państwa
 
 - (Maciej) Panie Macieju!
 - (Maciek) Panie Maćku!
+- (Mateusz) Panie Mateuszu!
 - (Grzegorz) Panie Grzegorzu!
+- (Mateusz) Panie Szymonie!
 - (Jan) Panie Janie!
 - (Marcin) Panie Marcinie!
 - (Ignacy) Panie Ignacy!
