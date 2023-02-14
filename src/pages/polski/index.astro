@@ -6,7 +6,10 @@ import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 
 import ArticleList from "$/components/ArticleList.astro";
 
-const articles = await Astro.glob<MarkdownArticleMatter>('./*.md');
+const articles = (await Astro.glob<MarkdownArticleMatter>('./*.md')).map((i) => ({
+  title: i.frontmatter.title,
+  url: i.url!,
+}));
 ---
 <BaseLayout title="Польский язык">
   <h2>Польский язык</h2>

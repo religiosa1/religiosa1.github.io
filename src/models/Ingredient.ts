@@ -1,10 +1,14 @@
-export interface Ingredient {
+import { z } from "astro:content";
+
+export const ingredientsSchema = z.object({
   /** Название */
-  name: string;
+  name: z.string(),
   /** Количество с ед. измерения */
-  quant?: string;
+  desc: z.string().optional(),
   /** Альтернативная единица измерения */
-  alt?: string;
+  quant: z.string().optional(),
   /** Описание или пояснение */
-  desc?: string;
-}
+  alt: z.string().optional(),
+});
+
+export type Ingredient = z.infer<typeof ingredientsSchema>;

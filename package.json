@@ -1,15 +1,16 @@
 {
-  "name": "@example/starter",
-  "version": "0.0.2",
+  "name": "religiosa.ru",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "sync": "astro sync",
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^1.0.0-beta.44",
+    "astro": "^2.0.11",
     "remark-toc": "^8.0.1"
   }
 }

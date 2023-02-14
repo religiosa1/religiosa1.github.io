@@ -1,12 +1,14 @@
 ---
-import type { MarkdownRecipeMatter } from '$/models/MarkdownRecipeMatter';
 import BaseLayout from '$/components/BaseLayout.astro';
 
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
-
+import { getCollection } from 'astro:content';
 import ArticleList from "$/components/ArticleList.astro";
 
-const articles = await Astro.glob<MarkdownRecipeMatter>('../../content/recepies/*.md');
+const articles = (await getCollection("recepies")).map((i) => ({
+  title: i.data.title,
+  url: `./${i.slug}`
+}))
 ---
 <BaseLayout title="Кулинарные рецепты">
   <h2>Кулинарные рецепты</h2>
@@ -17,5 +19,5 @@ const articles = await Astro.glob<MarkdownRecipeMatter>('../../content/recepies/
 
   <p>Здесь собраны всякие разные кулинарные рецепты, которые мне понравились и которые я потом готовил.</p>
 
-  <ArticleList slug articles={articles} />
+  <ArticleList articles={articles} />
 </BaseLayout>

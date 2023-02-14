@@ -1,30 +1,22 @@
 ---
-  import type { MarkdownInstance } from "astro";
-  import type { MarkdownArticleMatter } from "$/models/MarkdownArticleMatter";
-
   export interface Props {
-    articles: MarkdownInstance<MarkdownArticleMatter>[];
-    basepath?: string;
-    slug?: boolean;
+    articles: Array<{
+      title: string;
+      url: string;
+    }>
   }
-
-  const {
-    articles,
-    basepath="./",
-    slug,
-  } = Astro.props as Props;
+//    const url = slug && article.frontmatter.slug ?
+// basepath + article.frontmatter.slug :
+//       article.url;
+  const { articles } = Astro.props as Props;
 ---
 <nav class="articles-list">
-  {articles.map(async (article) => {
-    const url = slug && article.frontmatter.slug ?
-      basepath + article.frontmatter.slug :
-      article.url;
-    return (
-      <a href={url} class="articles-list__link">
-        {article.frontmatter.title}
+  {articles.map((article) => (
+      <a href={article.url} class="articles-list__link">
+        {article.title}
       </a>
     )
-  })}
+  )}
 </nav>
 
 <style>

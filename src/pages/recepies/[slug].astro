@@ -1,54 +1,54 @@
 ---
-import type { MarkdownInstance } from "astro";
-import type { MarkdownRecipeMatter } from '$/models/MarkdownRecipeMatter';
 import BaseLayout from '$/components/BaseLayout.astro';
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 import Duration from "$/components/Duration.astro";
 import Ingredients from "$/components/Ingredients.astro";
+import { CollectionEntry, getCollection } from 'astro:content';
 
 interface Props {
-  article: MarkdownInstance<MarkdownRecipeMatter>;
-  recommended: MarkdownInstance<MarkdownRecipeMatter>[];
+  article: CollectionEntry<"recepies">;
+  recommended: CollectionEntry<"recepies">[];
 }
 
 export async function getStaticPaths() {
-  const articles = await Astro.glob<MarkdownRecipeMatter>('../../content/recepies/*.md');
-  return articles.map((article) => ({
-    params: { slug: article.frontmatter.slug, },
+  const recepies = await getCollection('recepies');
+  return recepies.map((article) => ({
+    params: { slug: article.slug, },
     props: {
       article,
-      recommended: article.frontmatter.recommended?.length ?
-        article.frontmatter.recommended.map( i => articles.find(j => j.frontmatter.slug === i))
+      recommended: article.data.recommended?.length ?
+        article.data.recommended.map( i => recepies.find(j => j.slug === i))
         : [],
     },
   }) );
 }
 
 const { article, recommended } = Astro.props as Props;
+const { Content } = await article.render()
 ---
 
-<BaseLayout title={article.frontmatter.title}>
-  <h2>{article.frontmatter.title}</h2>
-  { article.frontmatter.originalTitle && (
-    <i class="original-title">{article.frontmatter.originalTitle}</i>
+<BaseLayout title={article.data.title}>
+  <h2>{article.data.title}</h2>
+  { article.data.originalTitle && (
+    <i class="original-title">{article.data.originalTitle}</i>
   )}
 
-  <Breadcrumbs current={article.frontmatter.title}>
+  <Breadcrumbs current={article.data.title}>
     <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
     <BreadcrumbsLink to="/recepies/">Кулинарные рецепты</BreadcrumbsLink>
   </Breadcrumbs>
 
   <article>
 
-    { article.frontmatter.time && <Duration value={article.frontmatter.time}>Время приготовления</Duration> }
-    { article.frontmatter.waiting && <Duration value={article.frontmatter.waiting}>Время ожидания</Duration> }
+    { article.data.time && <Duration value={article.data.time}>Время приготовления</Duration> }
+    { article.data.waiting && <Duration value={article.data.waiting}>Время ожидания</Duration> }
 
-    { article.frontmatter.ingredients && (<>
+    { article.data.ingredients && (<>
       <h3>Ингредиенты</h3>
-      { Array.isArray(article.frontmatter.ingredients) ? (
-        <Ingredients ingredients={article.frontmatter.ingredients} />
-      ) : typeof article.frontmatter.ingredients === "object" ? (
-        Object.entries(article.frontmatter.ingredients).map(([ name, ingredients]) => (
+      { Array.isArray(article.data.ingredients) ? (
+        <Ingredients ingredients={article.data.ingredients} />
+      ) : typeof article.data.ingredients === "object" ? (
+        Object.entries(article.data.ingredients).map(([ name, ingredients]) => (
           <>
             <h4>{name}</h4>
             <Ingredients ingredients={ingredients} />
@@ -58,19 +58,19 @@ const { article, recommended } = Astro.props as Props;
     </>)}
 
     <h3>Инструкции</h3>
-    <article.Content />
+    <Content />
 
-    { article.frontmatter.sources?.length > 0 && (<>
+    { !!article.data.sources?.length && (<>
       <h3>Источники</h3>
-      { article.frontmatter.sources.map(source => (
+      { article.data.sources?.map(source => (
         <a href={source} class="b-link">{source}</a>
       ))}
     </>)}
 
-    { recommended?.length > 0 && (<>
+    { !!recommended?.length && (<>
       <h3>Рекомендации</h3>
-      { recommended.filter(r => r).map(r => (
-        <a href={"/recepies/" + r.frontmatter.slug} class="b-link">{r.frontmatter.title}</a>
+      { recommended.filter((r) => r).map((r) => (
+        <a href={"/recepies/" + r.slug} class="b-link">{r.data.title}</a>
       ))}
     </>)}
   </article>
