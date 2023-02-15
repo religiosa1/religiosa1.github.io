@@ -1,7 +1,6 @@
 ---
 title: "gulp"
 depreceated: true
-layout: $/components/ArticleLayout.astro
 ---
 # Это доисторическая статья про сборку фронта гульпом
 

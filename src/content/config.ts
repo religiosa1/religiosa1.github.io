@@ -1,5 +1,6 @@
 import { z, defineCollection } from 'astro:content';
 import { ingredientsSchema } from "$/models/Ingredient";
+import { articleSchema } from '$/models/Article';
 
 const recipeCollection = defineCollection({
   schema: z.object({
@@ -16,6 +17,14 @@ const recipeCollection = defineCollection({
   }),
 });
 
+const articlesCollection = defineCollection({
+  schema: articleSchema
+});
+
 export const collections = {
   'recepies': recipeCollection,
+  'electronics': articlesCollection,
+  'polski': articlesCollection,
+  'programming': articlesCollection,
+  'woodworking': articlesCollection,
 };

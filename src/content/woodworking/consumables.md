@@ -1,6 +1,5 @@
 ---
 title: Расходники
-layout: $/components/ArticleLayout.astro
 ---
 
 ## Содержание

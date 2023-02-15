@@ -1,8 +1,8 @@
 ---
   export interface Props {
     articles: Array<{
-      title: string;
-      url: string;
+      data: { title: string };
+      slug: string;
     }>
   }
 //    const url = slug && article.frontmatter.slug ?
@@ -12,8 +12,8 @@
 ---
 <nav class="articles-list">
   {articles.map((article) => (
-      <a href={article.url} class="articles-list__link">
-        {article.title}
+      <a href={`./${article.slug}`} class="articles-list__link">
+        {article.data.title}
       </a>
     )
   )}

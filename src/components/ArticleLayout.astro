@@ -1,32 +1,26 @@
 ---
 import BaseLayout from "$/components/BaseLayout.astro";
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
+import { Article } from "$/models/Article";
+import { match } from "ts-pattern";
 
-const { content } = Astro.props;
+interface Props {
+  data: Article
+}
+const { data } = Astro.props;
 
 const [_, path] = new URL(Astro.request.url).pathname.split("/");
-let pathname;
-switch (path) {
-  case "electronics":
-    pathname = "Электроника"
-  break;
-  case "programming":
-    pathname = "Программирование"
-  break;
-  case "woodworking":
-    pathname = "Столярка"
-  break;
-  case "polski":
-    pathname = "Польский язык"
-  break;
-}
-
+const pathname = match(path)
+  .with("electronics", () => "Электроника")
+  .with("programming", () => "Программирование")
+  .with("woodworking", () => "Столярка")
+  .with("polski", () => "Польский язык")
+  .run();
 ---
+<BaseLayout title={data.title}>
+  <h2>{data.title}</h2>
 
-<BaseLayout title={content.title}>
-  <h2>{content.title}</h2>
-
-  <Breadcrumbs current={content.title}>
+  <Breadcrumbs current={data.title}>
     <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
     { pathname && (
       <BreadcrumbsLink to={`/${path}/`}>{pathname}</BreadcrumbsLink>
@@ -34,7 +28,7 @@ switch (path) {
   </Breadcrumbs>
 
   <article class="md-content">
-    {content.depreceated && (
+    {data.deprecated && (
       <div class="alert-box">
         Содержание этой статьи крайне устарело!
         Она здесь исключительно для исторического очерка, руководствование ей напрямую скорее принесёт больше вреда

@@ -1,15 +1,10 @@
 ---
-import type { MarkdownArticleMatter } from "$/models/MarkdownArticleMatter";
-import BaseLayout from '$/components/BaseLayout.astro';
-
+import { getCollection } from "astro:content";
+import BaseLayout from "$/components/BaseLayout.astro";
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
-
 import ArticleList from "$/components/ArticleList.astro";
 
-const articles = (await Astro.glob<MarkdownArticleMatter>('./*.md')).map((i) => ({
-  title: i.frontmatter.title,
-  url: i.url!,
-}));
+const articles = await getCollection("programming");
 ---
 <BaseLayout title="Программирование">
   <h2>Программирование</h2>
@@ -19,8 +14,8 @@ const articles = (await Astro.glob<MarkdownArticleMatter>('./*.md')).map((i) => 
   </Breadcrumbs>
 
   <p>
-    Это в основном дико устаревшие заметки про программированию, которые я оставил для истории ну
-    или для редких случаев, когда приходится заниматься палеонтологией.
+    Это дико устаревшие заметки про программированию, которые я оставил для истории и
+    ностальгии или для редких случаев, когда приходится заниматься палеонтологией.
   </p>
 
   <ArticleList articles={articles} />

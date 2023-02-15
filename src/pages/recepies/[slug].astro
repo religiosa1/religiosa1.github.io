@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '$/components/BaseLayout.astro';
+import { CollectionEntry, getCollection } from "astro:content";
+import BaseLayout from "$/components/BaseLayout.astro";
 import { Breadcrumbs, BreadcrumbsLink } from "$/components/Breadcrumbs";
 import Duration from "$/components/Duration.astro";
 import Ingredients from "$/components/Ingredients.astro";
-import { CollectionEntry, getCollection } from 'astro:content';
 
 interface Props {
   article: CollectionEntry<"recepies">;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export async function getStaticPaths() {
-  const recepies = await getCollection('recepies');
+  const recepies = await getCollection("recepies");
   return recepies.map((article) => ({
     params: { slug: article.slug, },
     props: {

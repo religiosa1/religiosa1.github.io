@@ -1,6 +1,5 @@
 ---
 title: Предлоги времени
-layout: $/components/ArticleLayout.astro
 ---
 
 ## Таблица соответсвий предлогов в разговорах о времени:

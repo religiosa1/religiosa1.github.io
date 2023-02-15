@@ -1,6 +1,5 @@
 ---
 title: Приветсвия и обращения, звательный падеж
-layout: $/components/ArticleLayout.astro
 ---
 
 ## Прямые обращения
