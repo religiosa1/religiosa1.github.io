@@ -9,6 +9,13 @@ export default defineConfig({
     // port: 3000,             // The port to run the dev server on.
   },
   markdown: {
+    shikiConfig: {
+      // Choose from Shiki's built-in themes (or add your own)
+      // https://github.com/shikijs/shiki/blob/main/docs/themes.md
+      theme: 'dracula',
+      // Enable word wrap to prevent horizontal scrolling
+      wrap: true,
+    },
     remarkPlugins: [
       'remark-gfm',
       [ 'remark-toc', { heading: "оглавление|содержание" } ]

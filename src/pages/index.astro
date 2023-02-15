@@ -26,12 +26,16 @@ import BaseLayout from '$/components/BaseLayout.astro';
   display: inline-block;
   padding: 1rem;
   box-sizing: border-box;
+  border-radius: 0.3rem;
   background-color: var(--clr-highlight);
   color: var(--clr-white);
   text-decoration: none;
   transition: background-color 0.3s ease-in-out;
   flex-basis: 100%;
   text-align: center;
+}
+.main-nav__link:visited {
+  color: var(--clr-link-visited-white);
 }
 .main-nav__link:hover {
   background-color: var(--clr-highlight-lighter);

@@ -5,9 +5,10 @@
   --clr-bg: var(--clr-white);
   --clr-lightest: #f5f1e7;
   --clr-light: #999;
-  --clr-link: #4169E1;
+  --clr-link: #4156e1;
   --clr-link-hover: #6189F1;
   --clr-link-visited: #7159C1;
+  --clr-link-visited-white: #f5f1e7;
   --clr-highlight: #191970;
   --clr-highlight-lighter: #2626a7;
   --clr-danger:  #ce1310;
@@ -20,6 +21,10 @@
     --clr-bg: var(--clr-black);
     --clr-lightest: #1c2841;
     --clr-light: #28385c;
+
+    --clr-link: #33b4ff;
+    --clr-link-hover: #64cdff;
+    --clr-link-visited: #569cd6;
   }
 }
 
@@ -81,6 +86,12 @@ a:visited { color: var(--clr-link-visited); }
 }
 .md-content img {
   max-width: 100%;
+}
+
+.md-content .astro-code {
+  padding: 0.7em;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0.55rem rgba(0 0 150 / 70%);
 }
 
 ul, ol {
