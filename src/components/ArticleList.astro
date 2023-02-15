@@ -1,32 +1,29 @@
 ---
-  export interface Props {
-    articles: Array<{
-      data: { title: string };
-      slug: string;
-    }>
-  }
-//    const url = slug && article.frontmatter.slug ?
-// basepath + article.frontmatter.slug :
-//       article.url;
-  const { articles } = Astro.props as Props;
+	export interface Props {
+		articles: Array<{
+			data: { title: string };
+			slug: string;
+		}>
+	}
+	const { articles } = Astro.props as Props;
 ---
 <nav class="articles-list">
-  {articles.map((article) => (
-      <a href={`./${article.slug}`} class="articles-list__link">
-        {article.data.title}
-      </a>
-    )
-  )}
+	{articles.map((article) => (
+			<a href={`./${article.slug}`} class="articles-list__link">
+				{article.data.title}
+			</a>
+		)
+	)}
 </nav>
 
 <style>
-  .articles-list {
-    display: block;
-    margin: 1rem 0;
-  }
+	.articles-list {
+		display: block;
+		margin: 1rem 0;
+	}
 
-  .articles-list__link {
-    display: block;
-    margin: max(12px, 0.5rem) 0;
-  }
+	.articles-list__link {
+		display: block;
+		margin: max(12px, 0.5rem) 0;
+	}
 </style>

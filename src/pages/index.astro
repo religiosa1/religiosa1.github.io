@@ -1,52 +1,52 @@
 ---
-import BaseLayout from '~/components/BaseLayout.astro';
+import BaseLayout from "~/components/BaseLayout.astro";
 ---
 <BaseLayout>
-  <p>Это старомодная домашняя страничка, содержащая заметки по интересующим меня темам.</p>
+	<p>Это старомодная домашняя страничка, содержащая заметки по интересующим меня темам.</p>
 
-  <nav class="main-nav">
-    <a class="main-nav__link" href="woodworking/">Столярка</a>
-    <a class="main-nav__link" href="recepies/">Рецепты</a>
-    <a class="main-nav__link" href="programming/">Программирование</a>
-    <a class="main-nav__link" href="electronics/">Электроника</a>
-    <a class="main-nav__link" href="polski/">Польский язык</a>
-  </nav>
+	<nav class="main-nav">
+		<a class="main-nav__link" href="woodworking/">Столярка</a>
+		<a class="main-nav__link" href="recepies/">Рецепты</a>
+		<a class="main-nav__link" href="programming/">Программирование</a>
+		<a class="main-nav__link" href="electronics/">Электроника</a>
+		<a class="main-nav__link" href="polski/">Польский язык</a>
+	</nav>
 </BaseLayout>
 
 <style>
 .main-nav {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
 }
 
 .main-nav__link {
-  display: inline-block;
-  padding: 1rem;
-  box-sizing: border-box;
-  border-radius: 0.3rem;
-  background-color: var(--clr-highlight);
-  color: var(--clr-white);
-  text-decoration: none;
-  transition: background-color 0.3s ease-in-out;
-  flex-basis: 100%;
-  text-align: center;
+	display: inline-block;
+	padding: 1rem;
+	box-sizing: border-box;
+	border-radius: 0.3rem;
+	background-color: var(--clr-highlight);
+	color: var(--clr-white);
+	text-decoration: none;
+	transition: background-color 0.3s ease-in-out;
+	flex-basis: 100%;
+	text-align: center;
 }
 .main-nav__link:visited {
-  color: var(--clr-link-visited-white);
+	color: var(--clr-link-visited-white);
 }
 .main-nav__link:hover {
-  background-color: var(--clr-highlight-lighter);
+	background-color: var(--clr-highlight-lighter);
 }
 .main-nav__link:active {
-  transform: translate(1px, 1px);
+	transform: translate(1px, 1px);
 }
 @media (min-width: 1000px) {
-  .main-nav__link {
-    flex-basis: calc(50% - 1rem);
-    max-width: 240px;
-  }
+	.main-nav__link {
+		flex-basis: calc(50% - 1rem);
+		max-width: 240px;
+	}
 }
 </style>

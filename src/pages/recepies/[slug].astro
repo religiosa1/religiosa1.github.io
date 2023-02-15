@@ -6,21 +6,21 @@ import Duration from "~/components/Duration.astro";
 import Ingredients from "~/components/Ingredients.astro";
 
 interface Props {
-  article: CollectionEntry<"recepies">;
-  recommended: CollectionEntry<"recepies">[];
+	article: CollectionEntry<"recepies">;
+	recommended: CollectionEntry<"recepies">[];
 }
 
 export async function getStaticPaths() {
-  const recepies = await getCollection("recepies");
-  return recepies.map((article) => ({
-    params: { slug: article.slug, },
-    props: {
-      article,
-      recommended: article.data.recommended?.length ?
-        article.data.recommended.map( i => recepies.find(j => j.slug === i))
-        : [],
-    },
-  }) );
+	const recepies = await getCollection("recepies");
+	return recepies.map((article) => ({
+		params: { slug: article.slug, },
+		props: {
+			article,
+			recommended: article.data.recommended?.length ?
+				article.data.recommended.map( i => recepies.find(j => j.slug === i))
+				: [],
+		},
+	}) );
 }
 
 const { article, recommended } = Astro.props as Props;
@@ -28,57 +28,57 @@ const { Content } = await article.render()
 ---
 
 <BaseLayout title={article.data.title}>
-  <h2>{article.data.title}</h2>
-  { article.data.originalTitle && (
-    <i class="original-title">{article.data.originalTitle}</i>
-  )}
+	<h2>{article.data.title}</h2>
+	{ article.data.originalTitle && (
+		<i class="original-title">{article.data.originalTitle}</i>
+	)}
 
-  <Breadcrumbs current={article.data.title}>
-    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
-    <BreadcrumbsLink to="/recepies/">Кулинарные рецепты</BreadcrumbsLink>
-  </Breadcrumbs>
+	<Breadcrumbs current={article.data.title}>
+		<BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+		<BreadcrumbsLink to="/recepies/">Кулинарные рецепты</BreadcrumbsLink>
+	</Breadcrumbs>
 
-  <article>
+	<article>
 
-    { article.data.time && <Duration value={article.data.time}>Время приготовления</Duration> }
-    { article.data.waiting && <Duration value={article.data.waiting}>Время ожидания</Duration> }
+		{ article.data.time && <Duration value={article.data.time}>Время приготовления</Duration> }
+		{ article.data.waiting && <Duration value={article.data.waiting}>Время ожидания</Duration> }
 
-    { article.data.ingredients && (<>
-      <h3>Ингредиенты</h3>
-      { Array.isArray(article.data.ingredients) ? (
-        <Ingredients ingredients={article.data.ingredients} />
-      ) : typeof article.data.ingredients === "object" ? (
-        Object.entries(article.data.ingredients).map(([ name, ingredients]) => (
-          <>
-            <h4>{name}</h4>
-            <Ingredients ingredients={ingredients} />
-          </>
-        ))
-      ) : null }
-    </>)}
+		{ article.data.ingredients && (<>
+			<h3>Ингредиенты</h3>
+			{ Array.isArray(article.data.ingredients) ? (
+				<Ingredients ingredients={article.data.ingredients} />
+			) : typeof article.data.ingredients === "object" ? (
+				Object.entries(article.data.ingredients).map(([ name, ingredients]) => (
+					<>
+						<h4>{name}</h4>
+						<Ingredients ingredients={ingredients} />
+					</>
+				))
+			) : null }
+		</>)}
 
-    <h3>Инструкции</h3>
-    <Content />
+		<h3>Инструкции</h3>
+		<Content />
 
-    { !!article.data.sources?.length && (<>
-      <h3>Источники</h3>
-      { article.data.sources?.map(source => (
-        <a href={source} class="b-link">{source}</a>
-      ))}
-    </>)}
+		{ !!article.data.sources?.length && (<>
+			<h3>Источники</h3>
+			{ article.data.sources?.map(source => (
+				<a href={source} class="b-link">{source}</a>
+			))}
+		</>)}
 
-    { !!recommended?.length && (<>
-      <h3>Рекомендации</h3>
-      { recommended.filter((r) => r).map((r) => (
-        <a href={"/recepies/" + r.slug} class="b-link">{r.data.title}</a>
-      ))}
-    </>)}
-  </article>
+		{ !!recommended?.length && (<>
+			<h3>Рекомендации</h3>
+			{ recommended.filter((r) => r).map((r) => (
+				<a href={"/recepies/" + r.slug} class="b-link">{r.data.title}</a>
+			))}
+		</>)}
+	</article>
 </BaseLayout>
 
 <style>
-  .b-link {
-    display: block;
-    margin: 0 0 0.5rem;
-  }
+	.b-link {
+		display: block;
+		margin: 0 0 0.5rem;
+	}
 </style>

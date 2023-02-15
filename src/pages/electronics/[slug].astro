@@ -3,22 +3,18 @@ import { CollectionEntry, getCollection } from "astro:content";
 import ArticleLayout from "~/components/ArticleLayout.astro";
 
 interface Props {
-  article: CollectionEntry<"electronics">;
+	article: CollectionEntry<"electronics">;
 }
 export async function getStaticPaths() {
-  const articles = await getCollection("electronics");
-  return articles.map(article => ({
-    params: { slug: article.slug }, props: { article },
-  }));
+	const articles = await getCollection("electronics");
+	return articles.map(article => ({
+		params: { slug: article.slug }, props: { article },
+	}));
 }
 
 const { article } = Astro.props;
 const { Content } = await article.render()
 ---
 <ArticleLayout data={article.data}>
-  <Content />
+	<Content />
 </ArticleLayout>
-
-
-
-

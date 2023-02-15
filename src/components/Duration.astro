@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  value: string;
+	value: string;
 }
 
 const { value } = Astro.props as Props;
@@ -9,25 +9,25 @@ const [ from, to ] = (value || "").split("..", 2);
 ---
 
 <span class="duration">
-  <span class="duration__title">
-    <slot />:
-  </span>
-  { to && "от " }
-  <span class="duration__time duration__time_from">
-    {from}
-  </span>
-  { to && (
-    <Fragment>
-      до
-      <span class="duration__time duration__time_to">
-        {to}
-      </span>
-    </Fragment>
-  )}
+	<span class="duration__title">
+		<slot />:
+	</span>
+	{ to && "от " }
+	<span class="duration__time duration__time_from">
+		{from}
+	</span>
+	{ to && (
+		<Fragment>
+			до
+			<span class="duration__time duration__time_to">
+				{to}
+			</span>
+		</Fragment>
+	)}
 </span>
 
 <style>
-  .duration {
-    display: block;
-  }
+	.duration {
+		display: block;
+	}
 </style>

@@ -1,44 +1,44 @@
 :root {
-  --clr-white: #f9fafb;
-  --clr-black: #111827;
-  --clr-txt: var(--clr-black);
-  --clr-bg: var(--clr-white);
-  --clr-lightest: #f5f1e7;
-  --clr-light: #999;
-  --clr-link: #4156e1;
-  --clr-link-hover: #6189F1;
-  --clr-link-visited: #7159C1;
-  --clr-link-visited-white: #f5f1e7;
-  --clr-highlight: #191970;
-  --clr-highlight-lighter: #2626a7;
-  --clr-danger:  #ce1310;
-  --max-container-width: 1232px;
+	--clr-white: #f9fafb;
+	--clr-black: #111827;
+	--clr-txt: var(--clr-black);
+	--clr-bg: var(--clr-white);
+	--clr-lightest: #f5f1e7;
+	--clr-light: #999;
+	--clr-link: #4156e1;
+	--clr-link-hover: #6189F1;
+	--clr-link-visited: #7159C1;
+	--clr-link-visited-white: #f5f1e7;
+	--clr-highlight: #191970;
+	--clr-highlight-lighter: #2626a7;
+	--clr-danger:	#ce1310;
+	--max-container-width: 1232px;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --clr-txt: #fff;
-    --clr-bg: var(--clr-black);
-    --clr-lightest: #1c2841;
-    --clr-light: #28385c;
+	:root {
+		--clr-txt: #fff;
+		--clr-bg: var(--clr-black);
+		--clr-lightest: #1c2841;
+		--clr-light: #28385c;
 
-    --clr-link: #33b4ff;
-    --clr-link-hover: #64cdff;
-    --clr-link-visited: #569cd6;
-  }
+		--clr-link: #33b4ff;
+		--clr-link-hover: #64cdff;
+		--clr-link-visited: #569cd6;
+	}
 }
 
 html, body {
-  width: 100%;
-  min-height: 100vh;
-  background: var(--clr-bg);
-  color: var(--clr-txt);
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  font-size: 16px;
-  font-size: clamp(16px, 2vw, 20px);
+	width: 100%;
+	min-height: 100vh;
+	background: var(--clr-bg);
+	color: var(--clr-txt);
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+	font-size: 16px;
+	font-size: clamp(16px, 2vw, 20px);
 }
 
 a { color: var(--clr-link); }
@@ -46,78 +46,78 @@ a:hover { color: var(--clr-link-hover); }
 a:visited { color: var(--clr-link-visited); }
 
 .main-grid {
-  display: grid;
-  grid-template-areas:
-    "header"
-    "main"
-    "footer"
-  ;
-  grid-template-rows: auto 1fr auto;
-  width: 100%;
-  max-width: var(--max-container-width);
-  margin: 0 auto;
-  grid-template-columns: 100%;
-  padding: 0 1rem;
+	display: grid;
+	grid-template-areas:
+		"header"
+		"main"
+		"footer"
+	;
+	grid-template-rows: auto 1fr auto;
+	width: 100%;
+	max-width: var(--max-container-width);
+	margin: 0 auto;
+	grid-template-columns: 100%;
+	padding: 0 1rem;
 }
 
 .main-grid__header {
-  grid-area: header;
-  padding: 1rem 0;
-  margin: 0 0 0.5rem;
-  border-bottom: 1px solid var(--clr-lightest);
+	grid-area: header;
+	padding: 1rem 0;
+	margin: 0 0 0.5rem;
+	border-bottom: 1px solid var(--clr-lightest);
 }
 .main-grid__main { grid-area: main; }
 .main-grid__footer {
-  grid-area: footer;
-  padding: 1rem 0;
-  margin: 0.5rem 0 0;
-  border-top: 1px solid var(--clr-lightest);
+	grid-area: footer;
+	padding: 1rem 0;
+	margin: 0.5rem 0 0;
+	border-top: 1px solid var(--clr-lightest);
 }
 
 .md-content table {
-  border-collapse: collapse;
+	border-collapse: collapse;
 }
 .md-content tbody tr:nth-child(odd) {
-  background-color: var(--clr-lightest);
+	background-color: var(--clr-lightest);
 }
 .md-content :is(td, th) {
-  border: 1px solid var(--clr-light);
-  padding: 0.2rem;
+	border: 1px solid var(--clr-light);
+	padding: 0.2rem;
 }
 .md-content img {
-  max-width: 100%;
+	max-width: 100%;
 }
 
 .md-content .astro-code {
-  padding: 0.7em;
-  border-radius: 0.3rem;
-  box-shadow: 0 0 0.55rem rgba(0 0 150 / 70%);
+	padding: 0.7em;
+	border-radius: 0.3rem;
+	box-shadow: 0 0 0.55rem rgba(0 0 150 / 70%);
 }
 
 ul, ol {
-  padding-left: 1.5rem;
+	padding-left: 1.5rem;
 }
 
 .table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
+	display: block;
+	width: 100%;
+	overflow-x: auto;
 }
 
 .block-img {
-  display: block;
-  margin: 1rem auto;
-  max-width: 100%;
+	display: block;
+	margin: 1rem auto;
+	max-width: 100%;
 }
 
 .f-media {
-  display: flex;
-  align-items: flex-end;
-  flex-flow: row wrap;
-  justify-content: center;
-  gap: 1rem;
+	display: flex;
+	align-items: flex-end;
+	flex-flow: row wrap;
+	justify-content: center;
+	gap: 1rem;
 }
 
 figure > figcaption {
-  text-align: center;
+	text-align: center;
 }

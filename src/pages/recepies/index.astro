@@ -7,13 +7,13 @@ import ArticleList from "~/components/ArticleList.astro";
 const articles = await getCollection("recepies");
 ---
 <BaseLayout title="Кулинарные рецепты">
-  <h2>Кулинарные рецепты</h2>
+	<h2>Кулинарные рецепты</h2>
 
-  <Breadcrumbs current="Кулинарные рецепты">
-    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
-  </Breadcrumbs>
+	<Breadcrumbs current="Кулинарные рецепты">
+		<BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+	</Breadcrumbs>
 
-  <p>Здесь собраны всякие разные кулинарные рецепты, которые мне понравились и которые я потом готовил.</p>
+	<p>Здесь собраны всякие разные кулинарные рецепты, которые мне понравились и которые я потом готовил.</p>
 
-  <ArticleList articles={articles} />
+	<ArticleList articles={articles} />
 </BaseLayout>

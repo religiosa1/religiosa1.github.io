@@ -2,42 +2,41 @@
 import { Ingredient } from "~/models/Ingredient";
 
 export interface Props {
-  ingredients: Ingredient[];
+	ingredients: Ingredient[];
 }
 
 const { ingredients } = Astro.props as Props;
 ---
-
 <ul class="ingredients">
-  { ingredients.map((ingredient) => (
-    <li class="ingredients__item">
-      <h5 class="ingredient__name">{ingredient.name}</h5>
-      { ingredient.quant && <span class="ingredient__quant">{ingredient.quant}</span> }
-      { ingredient.alt && <i class="ingredient__alt">{ingredient.alt}</i> }
-      { ingredient.desc && <i class="ingredient__desc">{ingredient.desc}</i> }
-    </li>
-  )) }
+	{ ingredients.map((ingredient) => (
+		<li class="ingredients__item">
+			<h5 class="ingredient__name">{ingredient.name}</h5>
+			{ ingredient.quant && <span class="ingredient__quant">{ingredient.quant}</span> }
+			{ ingredient.alt && <i class="ingredient__alt">{ingredient.alt}</i> }
+			{ ingredient.desc && <i class="ingredient__desc">{ingredient.desc}</i> }
+		</li>
+	)) }
 </ul>
 
 <style>
-  .ingredients {
-    list-style: none;
-    margin: 1rem 0;
-    padding: 0;
-  }
-  .ingredients__item {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 1rem;
-    margin: 0.3rem 0;
-    padding: 0;
-  }
-  .ingredient__name {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
-    font-style: italic;
-  }
+	.ingredients {
+		list-style: none;
+		margin: 1rem 0;
+		padding: 0;
+	}
+	.ingredients__item {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 1rem;
+		margin: 0.3rem 0;
+		padding: 0;
+	}
+	.ingredient__name {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 500;
+		font-style: italic;
+	}
 </style>

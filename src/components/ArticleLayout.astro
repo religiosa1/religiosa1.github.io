@@ -5,45 +5,45 @@ import { Article } from "~/models/Article";
 import { match } from "ts-pattern";
 
 interface Props {
-  data: Article
+	data: Article
 }
 const { data } = Astro.props;
 
 const [_, path] = new URL(Astro.request.url).pathname.split("/");
 const pathname = match(path)
-  .with("electronics", () => "Электроника")
-  .with("programming", () => "Программирование")
-  .with("woodworking", () => "Столярка")
-  .with("polski", () => "Польский язык")
-  .run();
+	.with("electronics", () => "Электроника")
+	.with("programming", () => "Программирование")
+	.with("woodworking", () => "Столярка")
+	.with("polski", () => "Польский язык")
+	.run();
 ---
 <BaseLayout title={data.title}>
-  <h2>{data.title}</h2>
+	<h2>{data.title}</h2>
 
-  <Breadcrumbs current={data.title}>
-    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
-    { pathname && (
-      <BreadcrumbsLink to={`/${path}/`}>{pathname}</BreadcrumbsLink>
-    )}
-  </Breadcrumbs>
+	<Breadcrumbs current={data.title}>
+		<BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+		{ pathname && (
+			<BreadcrumbsLink to={`/${path}/`}>{pathname}</BreadcrumbsLink>
+		)}
+	</Breadcrumbs>
 
-  <article class="md-content">
-    {data.deprecated && (
-      <div class="alert-box">
-        Содержание этой статьи крайне устарело!
-        Она здесь исключительно для исторического очерка, руководствование ей напрямую скорее принесёт больше вреда
-        чем пользы.
-      </div>
-    )}
-    <slot />
-  </article>
+	<article class="md-content">
+		{data.deprecated && (
+			<div class="alert-box">
+				Содержание этой статьи крайне устарело!
+				Она здесь исключительно для исторического очерка, руководствование ей напрямую скорее принесёт больше вреда
+				чем пользы.
+			</div>
+		)}
+		<slot />
+	</article>
 </BaseLayout>
 
 <style>
-  .alert-box {
-    margin: 1rem 0;
-    padding: 1rem;
-    border: 1px dashed var(--clr-danger, red);
-    border-radius: 5px;
-  }
+	.alert-box {
+		margin: 1rem 0;
+		padding: 1rem;
+		border: 1px dashed var(--clr-danger, red);
+		border-radius: 5px;
+	}
 </style>

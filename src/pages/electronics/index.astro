@@ -4,16 +4,16 @@ import BaseLayout from "~/components/BaseLayout.astro";
 import { Breadcrumbs, BreadcrumbsLink } from "~/components/Breadcrumbs";
 import ArticleList from "~/components/ArticleList.astro";
 
-const articles = await getCollection('electronics');
+const articles = await getCollection("electronics");
 ---
 <BaseLayout title="Электроника">
-  <h2>Электроника</h2>
+	<h2>Электроника</h2>
 
-  <Breadcrumbs current="Электроника">
-    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
-  </Breadcrumbs>
+	<Breadcrumbs current="Электроника">
+		<BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+	</Breadcrumbs>
 
-  <p>Различные заметки по электронике</p>
+	<p>Различные заметки по электронике</p>
 
-  <ArticleList articles={articles} />
+	<ArticleList articles={articles} />
 </BaseLayout>

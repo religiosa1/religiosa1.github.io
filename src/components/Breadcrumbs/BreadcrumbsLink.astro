@@ -1,20 +1,19 @@
 ---
 const { to } = Astro.props;
 ---
-
 <a href={to} class="breadcrubmbs-link">
-  <slot />
+	<slot />
 </a>
 
 <style>
-  .breadcrubmbs-link {
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-  .breadcrubmbs-link:not(:last-child)::after {
-    content: "|";
-    margin-left: 0.5rem;
-    text-decoration: none;
-    color: var(--clr-light);
-  }
+	.breadcrubmbs-link {
+		display: inline-block;
+		margin-right: 0.5rem;
+	}
+	.breadcrubmbs-link:not(:last-child)::after {
+		content: "|";
+		margin-left: 0.5rem;
+		text-decoration: none;
+		color: var(--clr-light);
+	}
 </style>

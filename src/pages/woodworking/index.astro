@@ -7,13 +7,13 @@ import ArticleList from "~/components/ArticleList.astro";
 const articles = await getCollection("woodworking");
 ---
 <BaseLayout title="Столярка">
-  <h2>Столярка</h2>
+	<h2>Столярка</h2>
 
-  <Breadcrumbs current="Столярка">
-    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
-  </Breadcrumbs>
+	<Breadcrumbs current="Столярка">
+		<BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+	</Breadcrumbs>
 
-  <p>Различные заметки по столярке</p>
+	<p>Различные заметки по столярке</p>
 
-  <ArticleList articles={articles} />
+	<ArticleList articles={articles} />
 </BaseLayout>

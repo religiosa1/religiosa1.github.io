@@ -1,62 +1,62 @@
 ---
 const title = Astro.props.title ?
-  `Личные заметки и всякая всячина - ${Astro.props.title}`
-  : "Личные заметки и всякая всячина";
+	`Личные заметки и всякая всячина - ${Astro.props.title}`
+	: "Личные заметки и всякая всячина";
 ---
 
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title}</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{title}</title>
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="stylesheet" href="/style/global.css" />
+	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+	<link rel="stylesheet" href="/style/global.css" />
 </head>
 <body class="main-grid">
-  <header class="main-grid__header">
-    <a href="/" class="moto-link"><h1 class="moto">Личные заметки и всякая всячина.</h1></a>
-  </header>
-  <main class="main-grid__main">
-    <slot />
-  </main>
-  <footer class="main-grid__footer">
-    <a href="https://github.com/religiosa1/religiosa.ru" class="github-link">
-      Исходный код
-    </a>
-  </footer>
+	<header class="main-grid__header">
+		<a href="/" class="moto-link"><h1 class="moto">Личные заметки и всякая всячина.</h1></a>
+	</header>
+	<main class="main-grid__main">
+		<slot />
+	</main>
+	<footer class="main-grid__footer">
+		<a href="https://github.com/religiosa1/religiosa.ru" class="github-link">
+			Исходный код
+		</a>
+	</footer>
 </body>
 </html>
 
 <style>
 .moto-link {
-  margin: 0;
-  color: var(--clr-txt);
-  text-decoration: none;
+	margin: 0;
+	color: var(--clr-txt);
+	text-decoration: none;
 }
 .moto-link:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 .moto {
-  margin: 0;
-  font-size: clamp(1rem, 2.5vw, 2.8rem) ;
+	margin: 0;
+	font-size: clamp(1rem, 2.5vw, 2.8rem) ;
 }
 
 .github-link {
-  color: var(--clr-txt);
-  text-decoration: none;
+	color: var(--clr-txt);
+	text-decoration: none;
 }
 .github-link:hover { text-decoration: underline; }
 .github-link::after {
-  content: "";
-  display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: url("/assets/GitHub-Mark_light.svg") no-repeat center /contain;
-  vertical-align: middle;
+	content: "";
+	display: inline-block;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: url("/assets/GitHub-Mark_light.svg") no-repeat center /contain;
+	vertical-align: middle;
 }
 @media (prefers-color-scheme: dark) {
-  .github-link::after { background-image: url("/assets/GitHub-Mark_dark.svg"); }
+	.github-link::after { background-image: url("/assets/GitHub-Mark_dark.svg"); }
 }
 </style>

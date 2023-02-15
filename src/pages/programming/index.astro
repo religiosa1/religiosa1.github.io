@@ -7,16 +7,16 @@ import ArticleList from "~/components/ArticleList.astro";
 const articles = await getCollection("programming");
 ---
 <BaseLayout title="Программирование">
-  <h2>Программирование</h2>
+	<h2>Программирование</h2>
 
-  <Breadcrumbs current="Программирование">
-    <BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
-  </Breadcrumbs>
+	<Breadcrumbs current="Программирование">
+		<BreadcrumbsLink to="/">Главная страница</BreadcrumbsLink>
+	</Breadcrumbs>
 
-  <p>
-    Это дико устаревшие заметки про программированию, которые я оставил для истории и
-    ностальгии или для редких случаев, когда приходится заниматься палеонтологией.
-  </p>
+	<p>
+		Это дико устаревшие заметки про программированию, которые я оставил для истории и
+		ностальгии или для редких случаев, когда приходится заниматься палеонтологией.
+	</p>
 
-  <ArticleList articles={articles} />
+	<ArticleList articles={articles} />
 </BaseLayout>
