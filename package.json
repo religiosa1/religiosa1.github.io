@@ -10,8 +10,8 @@
 		"preview": "astro preview"
 	},
 	"devDependencies": {
-		"astro": "^3.3.4",
+		"astro": "^4.5.16",
 		"remark-toc": "^9.0.0",
-		"ts-pattern": "^5.0.5"
+		"ts-pattern": "^5.1.0"
 	}
 }
