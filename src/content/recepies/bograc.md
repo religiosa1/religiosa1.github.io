@@ -25,7 +25,7 @@ ingredients:
   - { name: чёрный перец, quant: "1 ч.л." }
   - { name: зелень петрушки, quant:  "1 пучок" }
 sources:
-	- https://youtu.be/uV-cxRyazE0
+  - https://youtu.be/uV-cxRyazE0
 ---
 
 Венгерский говяжий суп, популярный также в закарпатье.

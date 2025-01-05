@@ -1,6 +1,6 @@
 ---
 title: "gulp"
-depreceated: true
+deprecated: true
 ---
 # Это доисторическая статья про сборку фронта гульпом
 
