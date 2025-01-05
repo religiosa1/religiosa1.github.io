@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
+		"module": "preserve",
 		"strict": true,
 		"allowJs": true,
 		"baseUrl": ".",

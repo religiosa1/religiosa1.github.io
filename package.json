@@ -1,17 +1,17 @@
 {
-	"name": "religiosa.ru",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro build",
-		"sync": "astro sync",
-		"preview": "astro preview"
-	},
-	"devDependencies": {
-		"astro": "^4.5.16",
-		"remark-toc": "^9.0.0",
-		"ts-pattern": "^5.1.0"
-	}
+  "name": "religiosa.ru",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "sync": "astro sync",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^5.1.2",
+    "remark-toc": "^9.0.0",
+    "ts-pattern": "^5.6.0"
+  }
 }
