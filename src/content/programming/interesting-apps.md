@@ -8,6 +8,7 @@ title: "Интересный софт и библиотеки"
 в сто лет его запустить и никогда не можешь запомнить, что использовать.
 
 ## Тулинг
+
 - [ImHex](https://imhex.werwolv.net/) [опенсорсный](https://github.com/WerWolv/ImHex) HEX-редактор
 - [MailPit](https://mailpit.axllent.org/) для тестирования отправки имейлов, заместо устаревшего MailHog'a
 - [Tokei](https://github.com/XAMPPRocky/tokei) TUI подсчёт строчек кода
@@ -16,8 +17,17 @@ title: "Интересный софт и библиотеки"
 - [Bandwhich](https://github.com/imsnif/bandwhich) консольный анализатор сетевого трафика
 
 ### Консольные проводники
+
 - [Yazi](https://github.com/sxyazi/yazi) на текущий момент (05.01.2025) в альфе
 - [Broot](https://dystroy.org/broot/)
 
+### Хорошие консольные альтернативы для родных юниксовых команд
+
+- [bat](https://github.com/sharkdp/bat) cat/less с подсветкой синтаксиса
+- [fzf](https://github.com/junegunn/fzf) Нечёткий поиск файлов
+- [fd](https://github.com/sharkdp/fd) Более удобный find
+- [eza](https://github.com/eza-community/eza) Красивенький ls
+
 ### Прочее
+
 - [https://ratatui.rs/] TUI-фреймворк для раста
