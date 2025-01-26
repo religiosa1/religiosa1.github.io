@@ -24,7 +24,14 @@ title: "Интересный софт и библиотеки"
 ### Хорошие консольные альтернативы для родных юниксовых команд
 
 - [bat](https://github.com/sharkdp/bat) cat/less с подсветкой синтаксиса
-- [fzf](https://github.com/junegunn/fzf) Нечёткий поиск файлов
+- [fzf](https://github.com/junegunn/fzf) Нечёткий поиск файлов.
+  Помимо непосредственно поиска файлов, может также применяться в качестве общего
+  поиска и выбора с выполнением действий из вывода другой программы, например выбор веток в гите для удаления:
+
+```sh
+git branch --format="%(refname:short)" | fzf -m --bind 'enter:become(git branch -D {+})'
+```
+
 - [fd](https://github.com/sharkdp/fd) Более удобный find
 - [eza](https://github.com/eza-community/eza) Красивенький ls
 
