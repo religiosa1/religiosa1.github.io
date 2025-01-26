@@ -34,7 +34,8 @@ git branch --format="%(refname:short)" | fzf -m --bind 'enter:become(git branch 
 
 - [fd](https://github.com/sharkdp/fd) Более удобный find
 - [eza](https://github.com/eza-community/eza) Красивенький ls
+- [atuin](https://atuin.sh/) История консоли (только юникс)
 
 ### Прочее
 
-- [https://ratatui.rs/] TUI-фреймворк для раста
+- [ratatui](https://ratatui.rs/) TUI-фреймворк для раста
