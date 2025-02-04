@@ -15,6 +15,7 @@ title: "Интересный софт и библиотеки"
 - [Dust](https://github.com/bootandy/dust) TUI анализатор используемого диского просранства
 - [Bottom](https://github.com/ClementTsang/bottom) консольный анализатор потребляемых компьютером ресурсов
 - [Bandwhich](https://github.com/imsnif/bandwhich) консольный анализатор сетевого трафика
+- [xh](https://github.com/ducaale/xh) удобный HTTP-клиент с опциональной трансляцией комманд в cURL
 
 ### Консольные проводники
 
